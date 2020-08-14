@@ -6,6 +6,7 @@ use App\model\Test as Test;
 use Illuminate\Http\Request;                //命名空间三元素：常量，方法，类
 use Illuminate\Support\Str;                 //引入str
 use App\Http\Controllers\Admin\SakuraController as Sakura;
+use Cache;
 
 
 //没有引入Controller的原因是在同级目录，能够使用基类controller
@@ -98,5 +99,16 @@ class TestController extends Controller
         $smallsakura= new Sakura("CTL");
         $smallsakura->get();
         Sakura::getName();        
+    }
+    public function getCache(){
+  /*       $result1 = Cache::get("username");
+        echo "是否能在第二个函数中调用".$result1; */
+        echo Cache::get("CTL111");
+    }
+    public function ceshi(){
+        Cache::put("CTL111","马上下班",60*60);   //设置为1小时
+    }
+    public function qingkong(){
+        Cache::flush();           //清空缓存
     }
 }

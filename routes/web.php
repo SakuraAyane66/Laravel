@@ -68,6 +68,14 @@ Route::group(['prefix'=>'test'],function(){
     Route::get('/test4', 'TestController@jiami');
     Route::get('/sakura', 'TestController@getSakura');
     Route::get('/son', 'Admin\SonController@DD');
+    Route::get('/cache', 'Admin\SakuraController@cacheTest');
+    Route::get('/getcache', 'Admin\SakuraController@getCache');
+    Route::get('/test66', 'TestController@getCache');
+    Route::get('/ceshisakura', 'Admin\SakuraController@ceshi');
+    Route::get('/qingkongsakura', 'Admin\SakuraController@qingkong');
+    
+    Route::get('/ceshi', 'TestController@ceshi');
+    Route::get('/qingkong', 'TestController@qingkong');
    
 });
 // Route::get('/Admin/index', 'Admin\IndexController@index');
