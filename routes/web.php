@@ -66,7 +66,9 @@ Route::group(['prefix'=>'test'],function(){
     Route::get('/test2', 'TestController@softDelete');
     Route::get('/test3', 'TestController@addUuid');
     Route::get('/test4', 'TestController@jiami');
-    
+    Route::get('/sakura', 'TestController@getSakura');
+    Route::get('/son', 'Admin\SonController@DD');
+   
 });
 // Route::get('/Admin/index', 'Admin\IndexController@index');
 // Route::get('/Admin/test', 'Admin\IndexController@test');

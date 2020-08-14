@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\model\Test as Test;
 use Illuminate\Http\Request;                //命名空间三元素：常量，方法，类
 use Illuminate\Support\Str;                 //引入str
-
+use App\Http\Controllers\Admin\SakuraController as Sakura;
 
 
 //没有引入Controller的原因是在同级目录，能够使用基类controller
@@ -93,4 +93,10 @@ class TestController extends Controller
     //     $pswd_open = Crypt::decrypt($pswd_lock);
     //     echo $pswd_open;
     // }
+    public function getSakura(){
+        $result = Sakura::getName();      //调用Sakura的静态方法
+        $smallsakura= new Sakura("CTL");
+        $smallsakura->get();
+        Sakura::getName();        
+    }
 }
