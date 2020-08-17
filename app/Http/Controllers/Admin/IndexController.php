@@ -10,7 +10,7 @@ use Illuminate\Support\Str;                   //引入uuid
 
 use App\model\User as User;                 //引入模型
 use App\model\Test as Test;   
-header('Content-Type: text/html; charset=gbk');
+header('Content-Type: text/html; charset=gbk');                    //不行，不能转化为中文
 
 /* 
            重点

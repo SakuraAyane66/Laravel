@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use \Illuminate\Support\Facades\Route;
 // use Illuminate\Filesystem\Cache;
 use Cache;
+// use Redis;
+use Illuminate\Support\Facades\Redis as Redis;
 
 class SakuraController extends Controller
 {
@@ -29,7 +31,7 @@ class SakuraController extends Controller
         echo '实例化后的方法' . $this->ayane . "<br />";
     }
     public function cacheTest()
-    {   
+    {
         //项目用的是remeber,获取并设置默认值
         //Cache::remember('user',$time,function(){});
         // $value = Cache::remember(‘users‘, $minutes, function() {
@@ -37,7 +39,7 @@ class SakuraController extends Controller
         //      });
         //设置一个缓存，put如果重名，则覆盖  ,add 重名不更新，不重名更新。
         Cache::put("PHP  Intelephense", '垃圾', 999);         //垃圾活垃圾活，插件报错这不是坑人么
-        Cache::put('sakura','siki',9999);
+        Cache::put('sakura', 'siki', 9999);
         Cache::forever('username', 'Sakura siki');           //foreve永久存储，但并不是永久
         $result = Cache::put('sakura', '超siki', 10);         //Cache将缓存已经改为了⭐⭐⭐⭐⭐秒,第三个参数⭐⭐⭐⭐⭐
         //$result = Cache::put('sakura', 'siki', 10);
@@ -52,7 +54,7 @@ class SakuraController extends Controller
     //获取caceh
     public function getCache()
     {
- /*        //获取cache里面的值
+        /*        //获取cache里面的值
         echo "修改了源文件之后不能读取file里面的cache？".$value = Cache::get("sakura")."<br />";
         //获取cache里面的值,get(),第一个为获取指定的key值，如果不存在则使用默认值（第二个参数）
         $value  = Cache::get("sakura", "default");
@@ -68,13 +70,41 @@ class SakuraController extends Controller
         }
         echo 'key是否存在'.$a."<br />"; */
 
-        echo "在这里获取清空之后的".Cache::get("CTL");
-        
+        echo "在这里获取清空之后的" . Cache::get("CTL");
     }
-    public function ceshi(){
-        Cache::put("CTL","马上下班",60*60);   //设置为1小时
+    public function ceshi()
+    {
+        Cache::put("CTL", "马上下班", 60 * 60);   //设置为1小时
     }
-    public function qingkong(){
+    public function qingkong()
+    {
         Cache::flush();           //清空缓存
+    }
+    public function testRedis()
+    {
+        // Redis::set("siki", "sakura ayane");
+        $res = Redis::get("siki");
+        echo "缓存的内容是" . $res . "<br />";
+        // redis的哈希类型
+        // Redis::hmset('happy:huizhou', ['name' => "惠州"]);
+        // Redis::hmset("fail:xiaoshou", [
+        //     "lover" => "黑嘿嘿?",
+        //     'nice' => "我是xiaoshou",
+        //     '挑衅' => '来打我啊'
+        // ]);
+        dump(Redis::hgetall("happy:huizhou"));
+        dump(Redis::hgetall('fail:xiaoshou'));
+        //echo "缓存的内容是" . $res1 . "<br />";
+        echo "<br/><hr/>";
+       
+    }
+    public function info()
+    {
+        phpinfo();
+    }
+    public function getRedis()
+    {
+        $res = Redis::get("siki");
+        echo "缓存的内容是" . $res;
     }
 }
