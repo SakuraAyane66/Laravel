@@ -80,13 +80,7 @@ Route::group(['prefix'=>'test'],function(){
     Route::get('/qingkong', 'TestController@qingkong');
    
 });
-// Route::get('/Admin/index', 'Admin\IndexController@index');
-// Route::get('/Admin/test', 'Admin\IndexController@test');
-// Route::get('/Admin/test1', 'Admin\IndexController@test1');
-// Route::get('/Admin/test2', 'Admin\IndexController@test2');
-// Route::get('/Admin/connect', 'Admin\IndexController@connect');
-// Route::get('/Admin/getData', 'Admin\IndexController@getData');
-// Route::get('/Admin/update', 'Admin\IndexController@update');
-// Route::get('/Admin/select', 'Admin\IndexController@select');
-// Route::get('/Admin/danGe', 'Admin\IndexController@danGe');
-// Route::get('/Admin/danGe', 'Admin\IndexController@danGe');
+
+//通过中间件访问showage,sakura构造器还在中间件之前执行，已经打印出来了
+Route::get('/showage',"Admin\SakuraController@get")->middleware(\App\Http\Middleware\ShowAge::class);
+
