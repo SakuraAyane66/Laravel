@@ -57,6 +57,7 @@ Route::group(['prefix' => 'Admin'], function ($route) {
     Route::get('/danGe', 'Admin\IndexController@danGe');
     Route::get('/useModel', 'Admin\IndexController@useModel');
     Route::get('/show', 'Admin\IndexController@show');
+    Route::get('/ModelGet', 'Admin\IndexController@ModelGet');
 });
 //TestController分组
 Route::group(['prefix'=>'test'],function(){

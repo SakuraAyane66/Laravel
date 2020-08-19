@@ -31,6 +31,10 @@ class IndexController extends Controller
         echo $data;
     }
 
+    public function ModelGet(){
+        $ret = Test::get();
+        return $ret;
+    }
 
     //
     public function index()
