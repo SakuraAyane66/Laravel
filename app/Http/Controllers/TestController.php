@@ -7,7 +7,7 @@ use Illuminate\Http\Request;                //命名空间三元素：常量，�
 use Illuminate\Support\Str;                 //引入str
 use App\Http\Controllers\Admin\SakuraController as Sakura;
 use Cache;
-
+use App\model\User as User;                      //使用Author
 
 //没有引入Controller的原因是在同级目录，能够使用基类controller
 class TestController extends Controller
@@ -111,4 +111,15 @@ class TestController extends Controller
     public function qingkong(){
         Cache::flush();           //清空缓存
     }
+    public function test10(){
+     $res = User::find("66")->getAuthor()->get();
+     $res1 = User::where("id",66)->first()->getAuthor()->select("address")->get();
+     echo $res1;
+     //dd($res);
+     //$address = $res->address;
+     //echo "address".$address."<br />";
+     echo json_encode($res);
+    }
+
+
 }

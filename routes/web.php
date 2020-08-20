@@ -76,7 +76,7 @@ Route::group(['prefix'=>'test'],function(){
     Route::get('/qingkongsakura', 'Admin\SakuraController@qingkong');
     Route::get('/redis', 'Admin\SakuraController@testRedis');
     Route::get('/info', 'Admin\SakuraController@info');
-
+    
     Route::get('/ceshi', 'TestController@ceshi');
     Route::get('/qingkong', 'TestController@qingkong');
    

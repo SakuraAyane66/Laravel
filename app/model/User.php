@@ -19,4 +19,8 @@ class User extends Model
     protected $primary = 'id';         // 主键为id     
     public $timestamps = false;         //时间戳 
     protected $fillable = ['id','age','username','password'];      //设置运行写入的字段
+
+    public function getAuthor(){
+      return $this->hasOne('App\\model\\Author','user_id','id');
+    }
 } 
