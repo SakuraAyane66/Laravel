@@ -76,10 +76,16 @@ Route::group(['prefix'=>'test'],function(){
     Route::get('/qingkongsakura', 'Admin\SakuraController@qingkong');
     Route::get('/redis', 'Admin\SakuraController@testRedis');
     Route::get('/info', 'Admin\SakuraController@info');
+    Route::get('/testFillable', 'TestController@testFillable');
+    Route::get('/testHasmany', 'TestController@testHasmany');
+    Route::get('/test10', 'TestController@test10');
+    Route::get('/test11', 'TestController@test11');
     
+
+
     Route::get('/ceshi', 'TestController@ceshi');
     Route::get('/qingkong', 'TestController@qingkong');
-   
+    
 });
 
 //通过中间件访问showage,sakura构造器还在中间件之前执行，已经打印出来了

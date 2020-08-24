@@ -6,6 +6,7 @@ use App\model\Test as Test;
 use Illuminate\Http\Request;                //命名空间三元素：常量，方法，类
 use Illuminate\Support\Str;                 //引入str
 use App\Http\Controllers\Admin\SakuraController as Sakura;
+use App\model\Author;
 use Cache;
 use App\model\User as User;                      //使用Author
 
@@ -114,12 +115,28 @@ class TestController extends Controller
     public function test10(){
      $res = User::find("66")->getAuthor()->get();
      $res1 = User::where("id",66)->first()->getAuthor()->select("address")->get();
-     echo $res1;
+     echo $res1."<br />";
      //dd($res);
      //$address = $res->address;
      //echo "address".$address."<br />";
      echo json_encode($res);
     }
-
-
+    public function test11(){
+        $res = User::find("66")->getAuthorMany()->where('name','Onishi')->get();
+        echo "查找find('66')的hasMany结果为：".$res . "<br />" ;
+    
+        $res1 = User::where("id",66)->first()->getAuthorMany()->select('address','name')->where("name",'sakura')->get();
+        echo $res1;
+    }
+    public function testFillable(){
+        // $data = ['id'=>'2','user_id'=>'66','address'=>'china','name'=>'CTL','test'=>'test'];       //不行，失败，不能插入不存在的test字段
+        $data = ['id'=>'3','user_id'=>'66','address'=>'Tokyo','name'=>'Onishi'];
+        
+        $res = Author::create($data);  
+        dd($res);
+    }
+    public function testHasmany(){
+        $res = Author::find('1')->refToUser()->get();
+        dd($res);
+    }
 }

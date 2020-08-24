@@ -23,4 +23,7 @@ class User extends Model
     public function getAuthor(){
       return $this->hasOne('App\\model\\Author','user_id','id');
     }
+    public function getAuthorMany(){
+      return $this->hasMany('App\\model\\Author','user_id','id');
+    }
 } 
