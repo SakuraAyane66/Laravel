@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\SakuraController as Sakura;
 use App\model\Author;
 use Cache;
 use App\model\User as User;                      //使用Author
+use App\Jobs\StoreUser;                          //使用队列
 
 //没有引入Controller的原因是在同级目录，能够使用基类controller
 class TestController extends Controller
@@ -129,8 +130,8 @@ class TestController extends Controller
         echo $res1;
     }
     public function testFillable(){
-        // $data = ['id'=>'2','user_id'=>'66','address'=>'china','name'=>'CTL','test'=>'test'];       //不行，失败，不能插入不存在的test字段
-        $data = ['id'=>'3','user_id'=>'66','address'=>'Tokyo','name'=>'Onishi'];
+         $data = ['id'=>'2','user_id'=>'66','address'=>'china','name'=>'CTL','test'=>'test'];       //不行，失败，不能插入不存在的test字段
+        //$data = ['id'=>'3','user_id'=>'66','address'=>'Tokyo','name'=>'Onishi'];
         
         $res = Author::create($data);  
         dd($res);
@@ -138,5 +139,21 @@ class TestController extends Controller
     public function testHasmany(){
         $res = Author::find('1')->refToUser()->get();
         dd($res);
+    }
+    public function testModelAll(){
+        $data = User::all();     //是一个对象
+        
+        foreach($data as $item){
+            echo $item."<br/>";
+        }
+        dd($data);
+    }
+
+    //队列操作
+    public function queue(){
+        $user = User::find(1); //找到一个实例模型
+        echo "实例为".$user."<br />";
+        StoreUser::dispatch($user)->delay(10);
+        echo "运行了";
     }
 }

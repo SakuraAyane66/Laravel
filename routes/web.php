@@ -1,5 +1,6 @@
 <?php
 
+use GuzzleHttp\Middleware;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,13 @@ Route::any('/test3/{id?}/{sakura}', function ($id = 0, $sakura) {
 //分目录管理
 Route::get('/home/controller', 'TestController@test1');
 
+
+//使用中间件
+Route::group(['middleware' => ['jsoncors']], function () {
+    Route::get('/testshow','Admin\IndexController@show');
+});
+
+
 //Admin 分组
 Route::group(['prefix' => 'Admin'], function ($route) {
     Route::get('/index', 'Admin\IndexController@index');
@@ -80,6 +88,8 @@ Route::group(['prefix'=>'test'],function(){
     Route::get('/testHasmany', 'TestController@testHasmany');
     Route::get('/test10', 'TestController@test10');
     Route::get('/test11', 'TestController@test11');
+    Route::get('/testModelAll', 'TestController@testModelAll');
+    Route::get('/queue', 'TestController@queue');
     
 
 

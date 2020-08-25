@@ -16,6 +16,8 @@ header('Content-Type: text/html; charset=gbk');                    //不行，�
            重点
    在查询中，后续的索引条件会受到前面查询记录的影响。
    比如前面查询 where('id',1)之后，后面的查询是从id=1的结果集中再次查询记录
+
+   return response()->json($data)->setEncodingOptions(JSON_UNESCAPED_UNICODE);    //加上这一句转换就可以网页显示为中文
 */
 
 class IndexController extends Controller
@@ -28,6 +30,7 @@ class IndexController extends Controller
     }
     public function show(){
         $data=$this->user->where('id','1')->get();
+        return response()->json($data)->setEncodingOptions(JSON_UNESCAPED_UNICODE);    //加上这一句转换就可以了
         echo $data;
     }
 
