@@ -21,7 +21,7 @@ class StoreUser implements ShouldQueue
     public function __construct(User $user)
     {
         //依赖注入user
-        $this->user = $user;
+        $this->user = $user->withoutRelations();
     }
 
     /**

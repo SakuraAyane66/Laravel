@@ -63,8 +63,8 @@ return [
             'driver' => 'redis',
             'connection' => 'default',
             'queue' => env('REDIS_QUEUE', 'default'),
-            'retry_after' => 90,
-            'block_for' => null,
+            'retry_after' => 90,                    //任务过期，超时
+            'block_for' => null,                    //阻塞
         ],
 
     ],

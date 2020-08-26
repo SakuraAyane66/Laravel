@@ -10,6 +10,7 @@ use App\model\Author;
 use Cache;
 use App\model\User as User;                      //使用Author
 use App\Jobs\StoreUser;                          //使用队列
+use App\Jobs\trade;                              //网络视频的队列
 
 //没有引入Controller的原因是在同级目录，能够使用基类controller
 class TestController extends Controller
@@ -146,6 +147,8 @@ class TestController extends Controller
         foreach($data as $item){
             echo $item."<br/>";
         }
+        $time = date('m-d h:i:s').uniqid();
+        echo "time: ".$time."<br />";
         dd($data);
     }
 
@@ -156,4 +159,19 @@ class TestController extends Controller
         StoreUser::dispatch($user)->delay(10);
         echo "运行了";
     }
+    //网络视频测试的队列控制程序，
+    public function trade(){
+        $data - array(
+            'tid'=>date('m-d h:i:s').uniqid(),
+            'name'=>'luke',
+            'address'=>'Hunan'
+        );
+       $job =  new trade($data);
+       //dispatch 入队，没有onQueue()会进入默认队列，onQueue是指定队列名     delay() 延迟执行
+       $job ->dispatch($job)->onQueue('trade')->delay(3);
+       return "恭喜你".$data['name']."购买商品成功";
+    }
+
+
+
 }
