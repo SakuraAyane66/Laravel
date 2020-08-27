@@ -101,3 +101,5 @@ Route::group(['prefix'=>'test'],function(){
 //通过中间件访问showage,sakura构造器还在中间件之前执行，已经打印出来了
 Route::get('/showage',"Admin\SakuraController@get")->middleware(\App\Http\Middleware\ShowAge::class);
 
+//队列相关 、、 luke视频
+Route::get('/trade','TestController@trade');

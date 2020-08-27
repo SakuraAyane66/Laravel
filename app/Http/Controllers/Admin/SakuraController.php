@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \Illuminate\Support\Facades\Route;
+use App\Jobs\Sakura;   //引入队列
+use App\model\Author;  //引入队列使用的相关模型
 // use Illuminate\Filesystem\Cache;
 use Cache;
 // use Redis;
@@ -107,4 +109,21 @@ class SakuraController extends Controller
         $res = Redis::get("siki");
         echo "缓存的内容是" . $res;
     }
+
+    //Sakura队列的测试方法，尝试获取goods
+    public function tryGetGoods(Request $request){
+      $id = rand(1,3); //随机函数1~3 ，模拟3个用户发起请求
+      $author = Author::find($id);
+      $job = new Sakura($author);
+      if($id==1){
+        $level = 'high';
+      }else {
+        $level = 'Sakura';
+      }
+      //发送到队列，根据id看进入那个队列
+      $job ->dispatch($job)->onConnection('redis')->onQueue($level)->delay(3);
+
+      return "您已经进入了排队状态，请等待结果！";
+    }   
+
 }

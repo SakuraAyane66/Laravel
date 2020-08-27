@@ -29,7 +29,7 @@ class IndexController extends Controller
         $this->user = $user;
     }
     public function show(){
-        $data=$this->user->where('id','1')->get();
+        $data=$this->user->where('id','666')->get();
         return response()->json($data)->setEncodingOptions(JSON_UNESCAPED_UNICODE);    //加上这一句转换就可以了
         echo $data;
     }

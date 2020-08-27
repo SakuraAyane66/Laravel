@@ -159,16 +159,16 @@ class TestController extends Controller
         StoreUser::dispatch($user)->delay(10);
         echo "运行了";
     }
-    //网络视频测试的队列控制程序，
+    //网络视频测试的队列控制程序，luke
     public function trade(){
-        $data - array(
+        $data = array(
             'tid'=>date('m-d h:i:s').uniqid(),
-            'name'=>'luke',
-            'address'=>'Hunan'
+            'name'=>'VIP',
+            'address'=>'CQ'
         );
        $job =  new trade($data);
        //dispatch 入队，没有onQueue()会进入默认队列，onQueue是指定队列名     delay() 延迟执行
-       $job ->dispatch($job)->onQueue('trade')->delay(3);
+       $job ->dispatch($job)->onQueue('high')->delay(3);
        return "恭喜你".$data['name']."购买商品成功";
     }
 
