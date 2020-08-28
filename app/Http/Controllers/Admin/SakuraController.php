@@ -113,16 +113,23 @@ class SakuraController extends Controller
     //Sakura队列的测试方法，尝试获取goods
     public function tryGetGoods(Request $request){
       $id = rand(1,3); //随机函数1~3 ，模拟3个用户发起请求
-      $author = Author::find($id);
-      $job = new Sakura($author);
+     $author = Author::find($id);            //报错，请传实例
+    //   $author = Author::where('id',3)->first(); //报错，请传实例
+    //   $author = new Author();            //这肯定是实例了吧
+    //   $author->where('id',$id)->first();
+      
+      echo "实例为".$author."<br />";
+      
       if($id==1){
         $level = 'high';
       }else {
         $level = 'Sakura';
       }
+      Sakura::dispatch($author)->onQueue($level)->delay(3);
       //发送到队列，根据id看进入那个队列
-      $job ->dispatch($job)->onConnection('redis')->onQueue($level)->delay(3);
-
+      //   $job = new Sakura($author);
+      //   $job ->dispatch($job)->onConnection('redis')->onQueue($level)->delay(3);
+      echo $author->name."您已经进入了 ".$level."队列，请您耐心等待！<br />";
       return "您已经进入了排队状态，请等待结果！";
     }   
 

@@ -103,3 +103,4 @@ Route::get('/showage',"Admin\SakuraController@get")->middleware(\App\Http\Middle
 
 //队列相关 、、 luke视频
 Route::get('/trade','TestController@trade');
+Route::get('/tryGetGoods','Admin\SakuraController@tryGetGoods');

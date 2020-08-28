@@ -20,10 +20,10 @@ class User extends Model
     public $timestamps = false;         //时间戳 
     protected $fillable = ['id','age','username','password'];      //设置运行写入的字段，create
 
-    public function getAuthor(){
-      return $this->hasOne('App\\model\\Author','user_id','id');
-    }
-    public function getAuthorMany(){
-      return $this->hasMany('App\\model\\Author','user_id','id');
-    }
+    // public function getAuthor(){
+    //   return $this->hasOne('App\\model\\Author','user_id','id');
+    // }
+    // public function getAuthorMany(){
+    //   return $this->hasMany('App\\model\\Author','user_id','id');
+    // }
 } 
