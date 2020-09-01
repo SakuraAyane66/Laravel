@@ -161,7 +161,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        //添加的excel扩展
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -229,6 +230,8 @@ return [
 
         //自己写的input简写（larvaerl7取消了Input 用Request=》input代替）
         'Input' => Illuminate\Support\Facades\Input::class,
+        //添加的excel扩展
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class, 
 
  
     ],

@@ -125,11 +125,12 @@ class SakuraController extends Controller
       }else {
         $level = 'Sakura';
       }
-      Sakura::dispatch($author)->onQueue($level)->delay(3);
+      //Sakura::dispatch($author)->onQueue($level)->delay(3);
+      Sakura::dispatch($author)->onQueue($level)->delay(now()->addMinutes(1));   //延时1分钟
       //发送到队列，根据id看进入那个队列
       //   $job = new Sakura($author);
       //   $job ->dispatch($job)->onConnection('redis')->onQueue($level)->delay(3);
-      echo $author->name."您已经进入了 ".$level."队列，请您耐心等待！<br />";
+      echo $author->name."您已经进入了 ".$level."队列，请您耐心等待！<br />";                    //分发到不同的队列
       return "您已经进入了排队状态，请等待结果！";
     }   
 

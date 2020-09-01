@@ -68,10 +68,10 @@ class Sakura implements ShouldQueue
         //业务逻辑处理
         // dd(User::where('name','CTL')->select('age'));
         echo "这里没问题吧？\r\n";
-        echo "新的一点";
-         $num =  User::where('name','CTL')->first();
-         $cc = $num->age;
-        echo "num等于".$cc;
+       
+        //  $num =  User::where('name','CTL')->first();
+        //  $cc = $num->age;
+        // echo "num等于".$cc;
         $count = Cache::remember('count',60*60*24,function(){
             return User::where('name','CTL')->first()->age;
         });
@@ -80,7 +80,7 @@ class Sakura implements ShouldQueue
         if($count==0){
             return "库存不足！";
         }
-        // dd();
+        // 应该在整合一下，把逻辑中的查询和减少放在一起
         $count = $this->getConut();
         if($count>0){
             $this->desCount();          //修改数据库中记录，$count -1

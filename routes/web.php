@@ -104,3 +104,10 @@ Route::get('/showage',"Admin\SakuraController@get")->middleware(\App\Http\Middle
 //队列相关 、、 luke视频
 Route::get('/trade','TestController@trade');
 Route::get('/tryGetGoods','Admin\SakuraController@tryGetGoods');
+
+//文件上传相关
+Route::post('/putFile','Admin\FileController@putFile');
+Route::post('/getPost','Admin\FileController@getPost');
+Route::post('/getFile','Admin\FileController@getFile');
+Route::get('/getExcel/id/{id}', 'Admin\FileController@getExcel');
+Router::get('/getExcel2','Admin\FileController@getExcel2');
