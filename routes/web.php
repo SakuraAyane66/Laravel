@@ -110,4 +110,4 @@ Route::post('/putFile','Admin\FileController@putFile');
 Route::post('/getPost','Admin\FileController@getPost');
 Route::post('/getFile','Admin\FileController@getFile');
 Route::get('/getExcel/id/{id}', 'Admin\FileController@getExcel');
-Router::get('/getExcel2','Admin\FileController@getExcel2');
+Route::get('/getExcel2','Admin\FileController@getExcel2');

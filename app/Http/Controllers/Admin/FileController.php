@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Exports\TestExport;
 use App\Http\Controllers\Controller;
+use App\model\Author;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
+// use Maatwebsite\Excel\Facades\Excel as Excel;
+use Excel;
 //目前是把kernel中的中间件给注释了
 class FileController extends Controller
 {
@@ -53,9 +56,10 @@ class FileController extends Controller
     }
 
     //从服务器端获取文件，
-    public function getFile(){
+    public function getFile()
+    {
         $file_name = 'pt7C7sHMv5C09e0gWAxJyb97RfturpcaZk9mc9Rq.jpeg';
-        return response()->file(storage_path().'\app\uploads\\'.$file_name);
+        return response()->file(storage_path() . '\app\uploads\\' . $file_name);
     }
     public function getPost(Request $request)
     {
@@ -63,24 +67,36 @@ class FileController extends Controller
         echo "name is " . $data . "<br />";
         return $data;
     }
-    public function getExcel($id=1){
-        return Excel::download(new TestExport($id),'test.xlsx');
+    public function getExcel($id = 1)
+    {
+        return Excel::download(new TestExport($id), 'test.xlsx');
     }
-    public function getExcel2(Excel $excel){
-        $info = Author::all()->select('id','name','user_id','address')->get();
-        foreach($info as $key=>$value){
-            $export []=array(
-             'ID'=>$value['id'],
-             'name'=>$value['name'],
-             'user_id'=>$value['user_id'],
-             'address'=>$value['address']
-            );
-        }
-        $table_name = 'Author';
-        $excel->create($table_name, function($excel) use ($export) { 
-            $excel->sheet('export', function($sheet) use ($export) {
-                $sheet->fromArray($export);
-            });
-        })->export('xls');
+
+    public function getExcel2($id = 1)
+    {
+        return Excel::download(new TestExport($id), 'test.xlsx');
+
+        //这里是无法调用Excel::create();
+        // ini_set('memory_limit','500M');
+        // set_time_limit(0);//设置超时限制为0分钟
+        // $cellData = Author::select('id','name','user_id','address')->limit(5)->get()->toArray();
+        // var_dump($cellData);
+        // echo '<br />';
+        // //echo "第一步的celldata为".$cellData."<br />";
+        // $cellData[0] = array('ID','姓名','用户id','地址');
+        // var_dump($cellData);
+        // echo '<br />';
+        // for($i=0;$i<count($cellData);$i++){
+        //     $cellData[$i] = array_values($cellData[$i]);
+        //     $cellData[$i][0] = str_replace('=',' '.'=',$cellData[$i][0]);
+        // }
+        // //dd($cellData);
+        // Excel::create('Author',function($excel) use ($cellData){
+        //     $excel->sheet('score', function($sheet) use ($cellData){
+        //         $sheet->rows($cellData);
+        //     });
+        // })->export('xls');
+        // die;
+
     }
 }
