@@ -91,8 +91,6 @@ Route::group(['prefix'=>'test'],function(){
     Route::get('/testModelAll', 'TestController@testModelAll');
     Route::get('/queue', 'TestController@queue');
     
-
-
     Route::get('/ceshi', 'TestController@ceshi');
     Route::get('/qingkong', 'TestController@qingkong');
     

@@ -9,6 +9,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
+
 use Cache;
 
 //控制器在SakuraController里面
@@ -40,51 +43,48 @@ class Sakura implements ShouldQueue
      *
      * @return void
      */
-    //获取$count的值
-    public function getConut(){
-        $user=User::where('name','CTL')->first();
+    //获取实际$count的值
+    public function getConut()
+    {
+        $user = User::where('name', 'CTL')->first();
         $count = $user->age;
-        Cache::put('count',$count,60*60*24);
+        // Cache::put('count', $count, 60 * 60 * 24);  //逻辑分到了desCount中
         return $count;
     }
     //$count -1 
-    public function desCount(){
-        // $count=User::where('name','CTL')->select('age');
-        // if($count>0){
-        //     $count--;
-        //     $res = User::where('name','CTL')->update(['age'=>$count]);
-        //     return $res;  //返回修改的行数
-        // }
-        // return $count;        //$count <= 0的时候，直接返回
-
-        $user=User::where('name','CTL')->first();
+    public function desCount()
+    {
+        $user = User::where('name', 'CTL')->first();
         $count = $user->age;
         $count--;
-        $res = User::where('name','CTL')->update(['age'=>$count]);
+        //修改事务
+        DB::beginTransaction();
+        try {
+            $res = User::where('name', 'CTL')->update(['age' => $count]);
+            DB::commit();
+        } catch (QueryException $exception) {
+            DB::rollback();
+            return "失败";
+        }
+        Cache::put('count', $count, 60 * 60 * 24);
         return $res;  //返回修改的行数
     }
     public function handle()
     {
         //业务逻辑处理
-        // dd(User::where('name','CTL')->select('age'));
         echo "这里没问题吧？\r\n";
-       
-        //  $num =  User::where('name','CTL')->first();
-        //  $cc = $num->age;
-        // echo "num等于".$cc;
-        $count = Cache::remember('count',60*60*24,function(){
-            return User::where('name','CTL')->first()->age;
+        //获取缓存
+        $count = Cache::remember('count', 60 * 60 * 24, function () {
+            return User::where('name', 'CTL')->first()->age;
         });
-        echo "到这里呢？";
-        // dd($count);
-        if($count==0){
+        echo 'count的数量为' . $count . "\r\n";
+        if ($count == 0) {
+            echo '库存不足';
             return "库存不足！";
+        } else {
+            // echo "成功到这里了！！\r\n";
+            $this->desCount();          //修改数据库中记录，$count -1，并且修改cache
+            return "恭喜您!" . $this->author->name . "您已经购买成功！";
         }
-        // 应该在整合一下，把逻辑中的查询和减少放在一起
-        $count = $this->getConut();
-        if($count>0){
-            $this->desCount();          //修改数据库中记录，$count -1
-        }
-        return "恭喜您!".$this->author->name."您已经购买成功！";
     }
 }
